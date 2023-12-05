@@ -1,17 +1,6 @@
-# CPP-LIBRARY-TEMPLATE
+# base64
 
-<!--- TODO: remove this section after init -->
-## Init template
-
-1. Clone repo created from template
-
-2. Enter repo directory
-
-3. Run script:
-
-```bash
-./scripts/init_template.sh <LIBRARY_NAME>
-```
+Simple header-only C++ library for Base64 encoding/decoding.
 
 ## Testing
 
@@ -33,5 +22,8 @@ cmake --build _build --target hello_test
 ## Usage
 
 ```cpp
+#include <base64/base64.hpp>
 
+auto encoded = base64::encode("foobar");
+assert(encoded == "Zm9vYmFy");
 ```

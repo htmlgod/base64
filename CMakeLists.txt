@@ -8,7 +8,7 @@ HunterGate(
     SHA1 "00901c19eefc02d24b16705b5f5a2b4f093a73fb"
 )
 
-project(CPP-LIBRARY-TEMPLATE)
+project(base64)
 option(BUILD_TESTS "Build tests" ON)
 
 hunter_add_package(GTest)
