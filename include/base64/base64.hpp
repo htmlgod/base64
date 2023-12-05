@@ -4,9 +4,9 @@
 #include <bitset>
 
 namespace {
-constexpr std::string_view BASE64_TABLE = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+constexpr inline std::string_view BASE64_TABLE = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-constexpr auto PADDING = '=';
+constexpr inline auto PADDING = '=';
 
 struct base64_buf {
     base64_buf() : buf(0) {}
@@ -14,7 +14,7 @@ struct base64_buf {
 
 };
 
-int get_decoded_index(char in) {
+inline int get_decoded_index(char in) {
     if (std::isupper(in)) 
         return static_cast<int>(in) - 65;
     if (std::islower(in)) 
@@ -26,7 +26,7 @@ int get_decoded_index(char in) {
     return 63;
 }
 
-std::string decode_quadruplet(std::string in) {
+std::string decode_quadruplet(const std::string& in) {
     base64_buf buf;
     char end = -1;
     size_t offset = in.size() - 1;
@@ -45,7 +45,7 @@ std::string decode_quadruplet(std::string in) {
     return result;
 }
 
-std::string encode_triplet(std::string in) {
+std::string encode_triplet(const std::string& in) {
     if (in.empty())
         return in;
     uint32_t bit_pack = 0;
@@ -56,9 +56,9 @@ std::string encode_triplet(std::string in) {
     base64_buf buf;
     buf.buf = bit_pack;
 
-    std::string out;
     size_t pads = 3 - in.size();
     size_t amount = 4 - pads;
+    std::string out;
     for (size_t i = 0; i < amount; i++) {
         out.push_back(BASE64_TABLE[(buf.buf & (0b111111 << (3 - i)*6)) >> (3 - i)*6]);
     }
@@ -71,26 +71,23 @@ std::string encode_triplet(std::string in) {
 
 namespace base64 {
 
-std::string encode(std::string in) {
+std::string encode(const std::string& in) {
     std::string result = "";
 
     size_t triplets = in.size() / 3 + 1;
-    for (size_t i = 0; i < triplets; ++i) {
+    for (size_t i = 0; i < triplets; ++i)
         result += encode_triplet(in.substr(i*3, 3));
-    }
 
     return result;
 }
 
-std::string decode(std::string in) {
+std::string decode(const std::string& in) {
     if (in.empty())
         return in;
     std::string result = "";
-
     size_t quadruplets = in.size() / 4;
-    for (size_t i = 0; i < quadruplets; ++i) {
+    for (size_t i = 0; i < quadruplets; ++i)
         result += decode_quadruplet(in.substr(i*4, 4));
-    }
     return result;
 }
 
