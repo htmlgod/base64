@@ -2,6 +2,8 @@
 
 Simple header-only C++ library for Base64 encoding/decoding.
 
+Reference - [RFC 4648](https://datatracker.ietf.org/doc/html/rfc4648)
+
 ## Testing
 
 Build tests:
